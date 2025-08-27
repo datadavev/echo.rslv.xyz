@@ -1,26 +1,30 @@
-[tool.poetry]
+[project]
 name = "echo-rslv-xyz"
 version = "0.2.1"
 description = "A HTTP reflection for testing purposes."
-authors = ["datadave <605409+datadavev@users.noreply.github.com>"]
-license = "GPL3"
+authors = [{ name = "datadave", email = "605409+datadavev@users.noreply.github.com" }]
+requires-python = ">=3.9,<4.0"
 readme = "README.md"
-packages = [{include = "echo"}]
+license = "GPL-3.0"
+dependencies = ["fastapi>=0.110.0,<0.111"]
 
-[tool.poetry.dependencies]
-python = "^3.9"
-fastapi = "^0.110.0"
+[project.scripts]
+httpeg = "echo.__main__:main"
 
-[tool.poetry.group.dev.dependencies]
-pytest = "^8.1.1"
-uvicorn = "^0.29.0"
+[dependency-groups]
+dev = [
+    "pytest>=8.1.1,<9",
+    "uvicorn>=0.29.0,<0.30",
+]
+
+[tool.hatch.build.targets.sdist]
+include = ["echo"]
+
+[tool.hatch.build.targets.wheel]
+include = ["echo"]
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [tool.poetry_bumpversion.file."echo/__init__.py"]
-
-
-[tool.poetry.scripts]
-httpeg = 'echo.__main__:main'
