@@ -1,0 +1,9 @@
+repos:
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    rev: 0.8.13
+    hooks:
+      - id: uv-export
+        name: main dependencies
+        args: [--no-dev, --no-hashes, --output-file, requirements.txt]
+
+      - id: uv-lock
