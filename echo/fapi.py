@@ -11,6 +11,7 @@ import fastapi.middleware.cors
 
 from . import __version__
 
+
 class HumanJsonResponse(fastapi.Response):
     media_type = "application/json"
 
@@ -20,15 +21,18 @@ class HumanJsonResponse(fastapi.Response):
             ensure_ascii=False,
             allow_nan=False,
             indent=2,
-            separators=(", ",": "),
+            separators=(", ", ": "),
         ).encode("utf-8")
 
 
 app = fastapi.FastAPI(
-    title="Example",
+    title="Echo",
     description=__doc__,
     version=__version__,
-    license_info={"name":"GPLv3", "url":"https://www.gnu.org/licenses/gpl-3.0.en.html"},
+    license_info={
+        "name": "GPLv3",
+        "url": "https://www.gnu.org/licenses/gpl-3.0.en.html",
+    },
     openapi_url="/api/v1/openapi.json",
     docs_url="/api",
 )
@@ -49,9 +53,11 @@ app.add_middleware(
 )
 
 
-def request_to_response(request: fastapi.Request, path:str) -> typing.Dict[str, typing.Any]:
+def request_to_response(
+    request: fastapi.Request, path: str
+) -> typing.Dict[str, typing.Any]:
     headers = {}
-    for k,v in request.headers.items():
+    for k, v in request.headers.items():
         if not k.lower().startswith("x-vercel"):
             headers[k] = v
 
@@ -64,22 +70,27 @@ def request_to_response(request: fastapi.Request, path:str) -> typing.Dict[str, 
     }
     return response
 
+
 @app.get("/favicon.ico", include_in_schema=False)
 async def get_favicon():
     raise fastapi.HTTPException(status_code=404, detail="Not found")
 
+
 @app.get("/{path:path}", response_class=HumanJsonResponse)
-def echo_get(request:fastapi.Request, path:str):
+def echo_get(request: fastapi.Request, path: str):
     return request_to_response(request, path)
+
 
 @app.head("/{path:path}", response_class=HumanJsonResponse)
-def echo_head(request:fastapi.Request, path:str):
+def echo_head(request: fastapi.Request, path: str):
     return request_to_response(request, path)
+
 
 @app.post("/{path:path}", response_class=HumanJsonResponse)
-def echo_post(request:fastapi.Request, path:str):
+def echo_post(request: fastapi.Request, path: str):
     return request_to_response(request, path)
 
+
 @app.put("/{path:path}", response_class=HumanJsonResponse)
-def echo_put(request:fastapi.Request, path:str):
+def echo_put(request: fastapi.Request, path: str):
     return request_to_response(request, path)
