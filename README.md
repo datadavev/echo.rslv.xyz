@@ -32,9 +32,15 @@ $ curl "https://echo.rslv.xyz/some/fake/path?and=query&foo=bar"
 Run locally:
 
 ```
-git clone 
+git clone https://github.com/datadavev/echo.rslv.xyz.git
 cd echo.rslv.xyz
 uv run python -m echo
+```
+
+Deploy on Vercel:
+
+```
+vercel --prod
 ```
 
 # Simple K8s Deployment for Echo Service
