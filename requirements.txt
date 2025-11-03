@@ -9,7 +9,7 @@ exceptiongroup==1.3.0 ; python_full_version < '3.11'
     # via anyio
 fastapi==0.119.0
     # via echo-rslv-xyz
-idna==3.10
+idna==3.11
     # via anyio
 pydantic==2.12.2
     # via fastapi
